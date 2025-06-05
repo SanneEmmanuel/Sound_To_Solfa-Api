@@ -1,10 +1,20 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware  # <-- add this import
 import numpy as np
 import librosa
 import io
 
 app = FastAPI()
+
+# Add CORS middleware allowing all origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # allow all headers
+)
 
 # Map MIDI notes in C major scale to solfa
 SOLFA_SYLLABLES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Ti']
